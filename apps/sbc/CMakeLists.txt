@@ -1,11 +1,23 @@
 set (sbc_SRCS
-HeaderFilter.cpp
-ParamReplacer.cpp
-RTPParameters.cpp
-RegexMapper.cpp
-SBC.cpp
-SBCCallProfile.cpp
 SDPFilter.cpp
+RateLimit.cpp
+RegisterDialog.cpp
+ParamReplacer.cpp
+SessionUpdate.cpp
+SBCCallRegistry.cpp
+SBCEventLog.cpp
+SBCSimpleRelay.cpp
+ReplacesMapper.cpp
+RegisterCache.cpp
+CallLeg.cpp
+SubscriptionDialog.cpp
+SBCCallLeg.cpp
+SBCCallProfile.cpp
+RTPParameters.cpp
+SBC.cpp
+arg_conversion.cpp
+RegexMapper.cpp
+HeaderFilter.cpp
 )
 
 SET(sbc_config_files
