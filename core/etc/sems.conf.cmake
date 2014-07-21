@@ -3,13 +3,13 @@
 # sems.conf.sample
 #
 # Sip Express Media Server (sems)
-# 
+#
 # sample configuration file
-# 
+#
 #
 # whitespaces (spaces and tabs) are ignored
 # comments start with a "#" and may be used inline
-# 
+#
 # example: option=value # i like this option
 #
 # @filename includes mod_config_path/filename
@@ -19,65 +19,67 @@
 # Network configuration
 
 # optional parameter: media_ip=<ip_address>|<device>
-# 
-# - this informs SEMS about the IP address or interface that 
-#   SEMS uses to send and receive media.  If not set, defaults 
+#
+# - this informs SEMS about the IP address or interface that
+#   SEMS uses to send and receive media.  If not set, defaults
 #   to first non-loopback interface.
 #
-# Examples: 
+# Examples:
 #  media_ip=10.0.0.34
 #  media_ip=eth0
+media_ip=%SIPXEDGE_HOST_IP%
 
 # optional parameter: sip_ip=<ip_address>
 #
-# - this informs SEMS about the SIP IP where its SIP stack is 
-#   bound to or should be bound to. This also sets 
-#   the value used for contact header in outgoing calls and 
+# - this informs SEMS about the SIP IP where its SIP stack is
+#   bound to or should be bound to. This also sets
+#   the value used for contact header in outgoing calls and
 #   registrations. If not set, defaults to first non-loopback
 #   interface.
 #
 # Example:
 #  sip_ip=10.0.0.34
 #
+sip_ip=%SIPXEDGE_HOST_IP%
 
 # optional parameter: public_ip=<ip_address>
-# 
+#
 # - when running SEMS behind certain simple NAT configurations,
 #   you can use this parameter to inform SEMS of its public IP
 #   address. If this parameter is set, SEMS will write this value
 #   into SDP bodies.
 #   If this parameter is not set, the local IP address is used.
-#   N.B., there is no support for port translation; the local 
+#   N.B., there is no support for port translation; the local
 #   RTP port is advertised in SDP in either case.
-#   
+#
 # Example:
 #  public_ip=75.101.219.48
-#  
-  
+#
+
 # optional parameter: sip_port=<port_number>
 #
-# - this informs SEMS about the port where its SIP stack is 
+# - this informs SEMS about the port where its SIP stack is
 #   bound to or should be bound to. SEMS needs this information
-#   to correctly set the contact header in outgoing calls 
-#   and registrations. Should be set to equal the 'port' 
+#   to correctly set the contact header in outgoing calls
+#   and registrations. Should be set to equal the 'port'
 #   configuration option in ser_sems.cfg.
-#  
+#
 #   default: 5060
 #
-sip_port=5080
+sip_port=5085
 
 # optional parameter: outbound_proxy=uri
 #
-# - this sets an outbound proxy for calls and registrations initiated 
-#   by SEMS. This does not apply to requests in a dialog that 
+# - this sets an outbound proxy for calls and registrations initiated
+#   by SEMS. This does not apply to requests in a dialog that
 #   is initiated by someone else and incoming to SEMS.
-#   If this is not set (default setting), then for dialogs 
-#   initiated by SEMS the r-uri is resolved and the request 
+#   If this is not set (default setting), then for dialogs
+#   initiated by SEMS the r-uri is resolved and the request
 #   is sent there directly.
 #   This is resolved by the SIP stack with DNS if a name is given.
-#   Warning: If the value set here can not be resolved, no 
+#   Warning: If the value set here can not be resolved, no
 #            requests will be sent out at all!
-#  
+#
 #   default: empty
 #
 # Example:
@@ -86,7 +88,7 @@ sip_port=5080
 # optional parameter: force_outbound_proxy={yes|no}
 #
 # - forces SEMS to send any request to the outbound proxy in any
-#   situation. This option will only have an effect if the 
+#   situation. This option will only have an effect if the
 #   outbound_proxy option has been set.
 #
 #   default: no
@@ -97,14 +99,14 @@ sip_port=5080
 # optional parameter: rtp_low_port=<port>
 #
 # - sets lowest for RTP used port
-rtp_low_port=10000
+rtp_low_port=30000
 
 # optional parameter: rtp_high_port=<port>
 #
-# - sets highest for RTP used port 
-rtp_high_port=60000
+# - sets highest for RTP used port
+rtp_high_port=31000
 
-# Additional IFs (optional): 
+# Additional IFs (optional):
 #   additional_interface = <list of interfaces>
 #
 # For each additional interface, a set of parameters
@@ -113,10 +115,10 @@ rtp_high_port=60000
 # Please note that for each additional interface,
 # 'sip_ip' is mandatory. The other
 # parameters are optional.
-# 
+#
 # Example:
 #  additional_interfaces=intern,extern
-#  
+#
 #  sip_ip_intern=192.168.0.5
 #  sip_port_intern=5060
 #  media_ip_intern=192.168.10.5
@@ -128,7 +130,7 @@ rtp_high_port=60000
 #  media_ip_extern=213.192.59.73
 #  rtp_low_port_extern=2000
 #  rtp_high_port_extern=5000
-#  public_ip_extern=213.192.35.73 
+#  public_ip_extern=213.192.35.73
 #
 
 ############################################################
@@ -137,23 +139,23 @@ rtp_high_port=60000
 # Configuration of plugin (module) loading:
 # - if load_plugins is set, only those are loaded.
 # - if load_plugins is not set, all modules in the plugin_path
-#   directory are loaded, except those which are listed 
+#   directory are loaded, except those which are listed
 #   in exclude_plugins.
 #
 
 # optional parameter: plugin_path=<path>
-# 
+#
 # - sets the path to the plug-ins' binaries
 # - may be absolute or relative to CWD
 plugin_path=${SEMS_EXEC_PREFIX}/${SEMS_LIBDIR}/sems/plug-in/
 
 # optional parameter: load_plugins=<modules list>
-# 
+#
 # semicolon-separated list of modules to load.
 # If empty, all modules in plugin_path are loaded.
 #
-# example for announcement with only g711 and ilbc codecs  
-# load_plugins=wav;ilbc;announcement
+# example for announcement with only g711 and ilbc codecs
+load_plugins=wav;ilbc;speex;session_timer;sbc
 
 # optional parameter: exclude_plugins=<modules list>
 #
@@ -165,15 +167,15 @@ plugin_path=${SEMS_EXEC_PREFIX}/${SEMS_LIBDIR}/sems/plug-in/
 exclude_plugins=precoded_announce
 
 # optional parameter: application
-# 
-# This controls which application is to be executed if there 
-# is no explicit application requested from the SIP stack 
+#
+# This controls which application is to be executed if there
+# is no explicit application requested from the SIP stack
 # (i.e. unixsockctrl and second parameter of t_write_unix).
 #
-# This can be one of 
+# This can be one of
 #    $(ruri.user)       - user part of ruri is taken as application,
 #                         e.g. sip:announcement@host
-#    $(ruri.param)      - uri parameter "app", e.g. 
+#    $(ruri.param)      - uri parameter "app", e.g.
 #                         sip:joe@host.net;app=announcement
 #    $(apphdr)          - the value of the P-App-Name header is used
 #
@@ -181,25 +183,25 @@ exclude_plugins=precoded_announce
 #                         app_mapping.conf (see app_mapping.conf)
 #    <application name> - application name configured here, e.g.
 #                         application=announcement
-#   
+#
 # examples:
 # application = conference
 # application = $(mapping)
 # application = $(ruri.user)
 # application = $(ruri.param)
-application = $(apphdr)
+application = sbc
 
 # parameter: plugin_config_path=<path>
 #
-# - in this path configuration files of the applications 
+# - in this path configuration files of the applications
 #   (e.g. announcement.conf) are searched
 plugin_config_path=${SEMS_CFG_PREFIX}/etc/sems/etc/
 
 # optional parameter: exclude_payloads=<payload list>
 #
 # semicolon-separated list of payloads to exclude from loading
-# ('blacklist'). 
-# 
+# ('blacklist').
+#
 # For example, to only use low bandwidth codecs:
 #  exclude_payloads=PCMU;PCMA;G726-40;G726-32;G721;L16
 # or, to use only codecs which are not CPU-intensive:
@@ -211,7 +213,7 @@ plugin_config_path=${SEMS_CFG_PREFIX}/etc/sems/etc/
 # logging and running
 
 # optional parameter: fork={yes|no}
-# 
+#
 # - specifies if sems should run in daemon mode (background)
 #   (fork=no is the same as -E)
 fork=yes
@@ -240,7 +242,7 @@ loglevel=2
 # optional parameter: syslog_facility={DAEMON|USER|LOCAL[0-7]}
 #
 # - sets the log facility that is used for syslog. Using this,
-#   the log can for example be filtered into a special file 
+#   the log can for example be filtered into a special file
 #   by the syslog daemon.
 #
 # Default: DAEMON
@@ -249,19 +251,19 @@ loglevel=2
 # syslog_facility=LOCAL0
 
 # optional parameter: log_sessions=[yes|no]
-# 
+#
 # Default: no
-# 
+#
 # If log_sessions=yes is set, INFO level log messages are generated
 # for each session when it is started and stopped.
 #
 # log_sessions=yes
 
 # optional parameter: log_events=[yes|no]
-# 
+#
 # Default: no
-# 
-# If log_eventy=yes is set, generic DBG level log messages are 
+#
+# If log_eventy=yes is set, generic DBG level log messages are
 # generated for each event that is posted into an event queue.
 #
 # log_events=yes
@@ -271,9 +273,9 @@ loglevel=2
 # tuning
 
 # optional parameter: session_processor_threads=<num_value>
-# 
+#
 # - controls how many threads should be created that
-#   process the application logic and in-dialog signaling. 
+#   process the application logic and in-dialog signaling.
 #   This is only available if compiled with threadpool support!
 #   (set USE_THREADPOOL in Makefile.defs)
 #   Defaults to 10
@@ -281,9 +283,9 @@ loglevel=2
 # session_processor_threads=50
 
 # optional parameter: media_processor_threads=<num_value>
-# 
+#
 # - controls how many threads should be created that
-#   process media - on single-processor systems set this 
+#   process media - on single-processor systems set this
 #   parameter to 1 (default), on MP systems to a higher
 #   value
 #
@@ -291,33 +293,33 @@ loglevel=2
 
 
 # optional parameter: session_limit=<limit>;<err code>;<err reason>
-# 
-# - this sets a maximum active session limit. If that limit is 
-#   reached, no further calls are accepted, but the error reply 
+#
+# - this sets a maximum active session limit. If that limit is
+#   reached, no further calls are accepted, but the error reply
 #   with err code/err reason is sent out.
-# 
+#
 # Default: 0 (None)
 #
 # Example:
 #  session_limit="1000;503;Server overload"
 
 # optional parameter: options_session_limit=<limit>;<err code>;<err reason>
-# 
+#
 # - this sets a custom response to OPTIONS, if the session count reaches
 #   a certain limit. This way health monitor could raise an alarm to syste
-#   administrator. 
-# 
+#   administrator.
+#
 # Default: 0 (None)
 #
 # Example:
 #  options_session_limit="900;503;Warning, server soon overloaded"
 
 # optional parameter: cps_limit=<limit>;<err code>;<err reason>
-# 
-# - this sets a maximum calls per sec limit. If that limit is 
-#   reached, no further calls are accepted, but the error reply 
+#
+# - this sets a maximum calls per sec limit. If that limit is
+#   reached, no further calls are accepted, but the error reply
 #   with err code/err reason is sent out.
-# 
+#
 # Default: 0 (None)
 #
 # Example:
@@ -333,15 +335,15 @@ loglevel=2
 #
 # Examples:
 #    # disable RTP timeout
-#    dead_rtp_time=0  
+#    dead_rtp_time=0
 #    # RTP timeout after 10 seconds
-#    dead_rtp_time=10  
+#    dead_rtp_time=10
 
 # optional parameter: use_default_signature={yes|no}
 #
-# - use a Server/User-Agent header with the SEMS server 
+# - use a Server/User-Agent header with the SEMS server
 #   signature and version.
-#   Set server_signature=0 in ser_sems.cfg if you use SER 
+#   Set server_signature=0 in ser_sems.cfg if you use SER
 #   as SIP stack.
 #
 #   default=no
@@ -352,9 +354,9 @@ use_default_signature=yes
 #
 # - use a Server/User-Agent header with a custom user agent
 #   signature.
-#   Overridden by default signature if 
+#   Overridden by default signature if
 #   use_default_signature is set.
-#   Set server_signature=0 in ser_sems.cfg if you use it.   
+#   Set server_signature=0 in ser_sems.cfg if you use it.
 #
 #
 # signature="SEMS media server 1.0"
@@ -380,8 +382,8 @@ use_default_signature=yes
 # optional parameter: ignore_rtpxheaders={yes|no}
 #
 # - if this is set to yes, RTP extension headers (e.g. when using ZRTP)
-#   are ignored. If set to no, the whole RTP packets with extension 
-#   headers will be ignored and a debug message is printed on every 
+#   are ignored. If set to no, the whole RTP packets with extension
+#   headers will be ignored and a debug message is printed on every
 #   received packet.
 #
 #   default=no
@@ -392,23 +394,23 @@ use_default_signature=yes
 #
 # sets inband DTMF detector to use. spandsp support must be compiled in
 # for this to have effect if dtmf_detector=spandsp.
-#  
+#
 # default: internal
 #
 # dtmf_detector=spandsp
 
 # optional parameter: unhandled_reply_loglevel={error|warn|info|debug|no}
-# 
-# the default application logic implemented in the applications is to stop 
-# the session right after sending BYE, without waiting for a reply. this 
-# leads to many log entries of the form 
-# ERROR: [b6fa6bb0] handleSipMsg (AmSipDispatcher.cpp:48): unhandled 
+#
+# the default application logic implemented in the applications is to stop
+# the session right after sending BYE, without waiting for a reply. this
+# leads to many log entries of the form
+# ERROR: [b6fa6bb0] handleSipMsg (AmSipDispatcher.cpp:48): unhandled
 #    reply:  [code:200;phrase:[OK];... ]
 #
 # This parameter sets the log lovel of unhandled positive (200 class) replies.
 #
 # default: error
-# 
+#
 # unhandled_reply_loglevel=info
 
 ############################################################

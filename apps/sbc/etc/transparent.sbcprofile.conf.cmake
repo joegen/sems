@@ -12,6 +12,8 @@
 #Call-ID
 #Call-ID=$ci_leg2
 
+transparent_dlg_id=yes
+
 ## routing
 # outbound proxy:
 #outbound_proxy=sip:192.168.5.106:5060
@@ -26,9 +28,9 @@
 
 ## RTP relay
 # enable RTP relaying (bridging):
-#enable_rtprelay=yes
+enable_rtprelay=yes
 # force symmetric RTP (start with passive mode):
-#rtprelay_force_symmetric_rtp=yes
+rtprelay_force_symmetric_rtp=yes
 # use symmetric RTP indication from P-MsgFlags flag 2
 #rtprelay_msgflags_symmetric_rtp=yes
 # RTP interface to use for A leg
@@ -40,7 +42,7 @@
 # use transparent RTP SSRC? [yes]
 #rtprelay_transparent_ssrc=no
 
-## filters: 
+## filters:
 #header_filter=blacklist
 #header_list=P-App-Param,P-App-Name
 #message_filter=transparent
